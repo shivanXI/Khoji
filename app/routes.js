@@ -38,4 +38,28 @@ module.exports = function(app) {
             res.json(req.body);
         });
     });
+
+    app.post('/query/', function(req, res){
+
+        var lat     = req.body.latitude;
+        var lng     = req.body.longitude;
+        var distance = req.body.distance;
+
+        var query = User.find({}); //Opens a generic mongoose query.
+
+        // filter by max Distance
+        if(distance){
+
+            //using MongoDB's geospatial querying features (lng, lat order)
+            query  = query.where('location').near({ center: {type: 'Point', coordinates: [lng, lat]},
+                 maxDistance: distance * 1609.34, spherical: true
+            });
+        }
+
+        query.exec(function(err, users){
+            if(err)
+                res.send(err);
+            res.json(users);
+        });
+    });
 };  
