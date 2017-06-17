@@ -21,6 +21,7 @@ module.exports = function(app) {
         });
     });
 
+    
     // POST Routes
     // --------------------------------------------------------
     // Provides method for saving new users in the db
@@ -44,6 +45,13 @@ module.exports = function(app) {
         var lat     = req.body.latitude;
         var lng     = req.body.longitude;
         var distance = req.body.distance;
+        var male    = req.body.male;
+        var female  = req.body.female;
+        var other   = req.body.other;
+        var minAge  = req.body.minAge;
+        var maxAge  = req.body.maxAge;
+        var favLang = req.body.favlang;
+        var reqVerified = req.body.reqVerified;
 
         var query = User.find({}); //Opens a generic mongoose query.
 
@@ -56,10 +64,37 @@ module.exports = function(app) {
             });
         }
 
+        //filter by Gender
+        if(male || female || other){
+            query.or([{ 'gender': male }, { 'gender': female }, { 'gender': other}]);
+        }
+
+        //filter by Min age
+        if(minAge){
+            query = query.where('age').gte(minAge);
+        }
+
+        //filter by Max age
+        if(maxAge){
+            query = query.where('age').lte(maxAge);
+        }
+
+        //By favorite language
+        if(favlang){
+            query  = query.where('favlang').equals(favLang);
+        }
+
+        // filter for HTML5 verified locations
+        if(reqVerified){
+            query = query.where('htmlverified').equals("Yo (It is a real data thank you for giving us!!)");
+        }
+
+        //Execution of query results
         query.exec(function(err, users){
             if(err)
                 res.send(err);
             res.json(users);
         });
     });
+
 };  
