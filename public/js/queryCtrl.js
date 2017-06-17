@@ -24,6 +24,36 @@ queryCtrl.controller('queryCtrl', function($scope, $log, $http, $rootScope, geol
 		});
 	});
 
-	
+	$scope.queryUsers = function(){
 
-}
+		queryBody = {
+			longitude: parseFloat($scope.formData.longitude),
+			latitude: parseFloat($scope.formData.latitude),
+			distance: parseFloat($scope.formData.distance),
+			male: $scope.formData.male,
+			female: $scope.formData.female,
+			other: $scope.formData.other,
+			minAge: $scope.formData.minage,
+			maxAge: $scope.formData.maxage,
+			favlang: $scope.formData.favlang,
+			reqVerified: $scope.formData.verified
+		};
+
+		// Post the querybody to the /query POST route to retrieve the filtered results
+		$http.post('/query', queryBody)
+			.success(function(queryResults){
+
+				//Testing the queryController
+				console.log("QueryBody:");
+				console.log(queryBody);
+				console.log("QueryResults:");
+				console.log(queryResults);
+
+				$scope.queryCount = queryResults.length;
+			})
+			.error(function(queryResults){
+				console.log('Error '  + queryResults);
+			})
+	};
+
+});
