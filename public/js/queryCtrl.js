@@ -44,11 +44,14 @@ queryCtrl.controller('queryCtrl', function($scope, $log, $http, $rootScope, geol
 			.success(function(queryResults){
 
 				//Testing the queryController
-				console.log("QueryBody:");
-				console.log(queryBody);
-				console.log("QueryResults:");
-				console.log(queryResults);
+				//console.log("QueryBody:");
+				//console.log(queryBody);
+				//console.log("QueryResults:");
+				//console.log(queryResults);
 
+				//Insert the filtered results in Google Map Service and refresh the page
+				gservice.refresh(queryBody.latitude, queryBody.longitude, queryResults);
+				
 				$scope.queryCount = queryResults.length;
 			})
 			.error(function(queryResults){
