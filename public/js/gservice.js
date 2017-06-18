@@ -21,7 +21,7 @@ angular.module('gservice', [])
         // Functions
         // --------------------------------------------------------------
         // Refresh the Map with new data. Function will take new latitude and longitude coordinates.
-        googleMapService.refresh = function(latitude, longitude){
+        googleMapService.refresh = function(latitude, longitude, filteredResults){
 
             // Clears the holding array of locations
             locations = [];
@@ -29,17 +29,28 @@ angular.module('gservice', [])
             // Set the selected lat and long equal to the ones provided on the refresh() call
             selectedLat = latitude;
             selectedLong = longitude;
+ 
+            //If filtered results are provided in the refresh()
+            if(filteredResults){
+                //Convert the filtered results into map points
+                locations = convertToMapPoints(filteredResults);
 
-            // Perform an AJAX call to get all of the records in the db.
-            $http.get('/users').success(function(response){
+                //Iniatialize the map -- mark them yellow as filtered
+                initialize(latitude, longitude, true);
+            }
+            else{ //If no filter was used
 
-                // Convert the results into Google Map Format
-                locations = convertToMapPoints(response);
+                    // Perform an AJAX call to get all of the records in the db.
+                    $http.get('/users').success(function(response){
 
-                // Then initialize the map.
-                initialize(latitude, longitude);
-            }).error(function(){});
-        };
+                        // Convert the results into Google Map Format
+                        locations = convertToMapPoints(response);
+
+                        // Then initialize the map.
+                        initialize(latitude, longitude);
+                    }).error(function(){});
+                }
+            };
 
         // Private Inner Functions
         // --------------------------------------------------------------
