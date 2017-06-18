@@ -90,7 +90,7 @@ angular.module('gservice', [])
     };
 
 // Initializes the map
-var initialize = function(latitude, longitude) {
+var initialize = function(latitude, longitude, filter) {
 
     // Uses the selected lat, long as starting point
     var myLatLng = {lat: selectedLat, lng: selectedLong};
@@ -105,13 +105,21 @@ var initialize = function(latitude, longitude) {
         });
     }
 
+    //If filter used set the icons to yellow , otherwise blue
+    if(filter){
+        icon = "http://maps.google.com/mapsfiles/ms/icons/yellow-dot.png";
+    }
+    else{
+        icon = "http://maps.google.com/mapsfiles/ms/icons/blue-dot.png";
+    }
+
     // Loop through each location in the array and place a marker
     locations.forEach(function(n, i){
         var marker = new google.maps.Marker({
             position: n.latlon,
             map: map,
             title: "Big Map",
-            icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            icon: icon,
         });
 
         // For each marker created, add a listener that checks for clicks
