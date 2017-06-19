@@ -1,3 +1,6 @@
+//Dependencies
+var fs = require('fs');
+
 'use strict';
 
 function openFolderDialog (fileHandlecb){
@@ -23,9 +26,20 @@ function hideSelectFolderButton (){
 	button.style.display = 'none';
 }
 
+function findAllImageFiles (folderPath, fileHandlecb){
+	fs.readdir(folderPath, function (err, files) {
+		if (err) { return fileHandlecb(err, null); }
+		fileHandlecb(null, files);
+	});
+}
+
 window.onload = function (){
 	bindSelectFolderClick(function (folderPath){
 		hideSelectFolderButton();
+		findAllImageFiles(folderPath, function (err, files){
+			console.log(err);
+			console.log(files);
+		});
 	});
 	//Add the function soon to complete the heirarchy of function coupling.
 };
