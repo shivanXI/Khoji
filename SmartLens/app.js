@@ -64,9 +64,14 @@ function findImageFiles (files, folderPath, fileHandlecb) {
 window.onload = function (){
 	bindSelectFolderClick(function (folderPath){
 		hideSelectFolderButton();
-		findAllImageFiles(folderPath, function (err, files){
-			console.log(err);
-			console.log(files);
+		findAllFiles(folderPath, function (err, files){
+			//console.log(err);
+			//console.log(files);
+			if (!err) {
+				findImageFiles(files, folderPath, function (imageFiles){
+					console.log(imageFiles);
+				});
+			}
 		});
 	});
 	//Add the function soon to complete the heirarchy of function coupling.
