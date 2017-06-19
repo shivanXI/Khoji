@@ -1,5 +1,7 @@
 //Dependencies
 var fs = require('fs');
+var mime = require('mime');
+var path = require('path');
 
 'use strict';
 
@@ -26,10 +28,36 @@ function hideSelectFolderButton (){
 	button.style.display = 'none';
 }
 
-function findAllImageFiles (folderPath, fileHandlecb){
+function findAllFiles (folderPath, fileHandlecb){
 	fs.readdir(folderPath, function (err, files) {
 		if (err) { return fileHandlecb(err, null); }
 		fileHandlecb(null, files);
+	});
+
+	var imageMimeTypes = [
+		'image/bmp',
+	    'image/gif',
+	    'image/jpeg',
+	    'image/png',
+	    'image/pjpeg',
+	    'image/tiff',
+	    'image/webp',
+	    'image/x-tiff',
+	    'image/x-windows-bmp'
+	];
+}
+
+function findImageFiles (files, folderPath, fileHandlecb) {
+	var imageFiles = [];
+	files.forEach(function (file) {
+		var fullFilePath = path.resolve(folderPath,file);
+		var extension = mime.lookup(fullFilePath);
+		if (imageMimeTypes.indexOf(extension) !== -1){
+			imageFiles.push({name: file, path: fullFilePath});
+		}
+		if (files.indexOf(file) == files.length-1){
+			fileHandlecb(imageFiles);
+		}
 	});
 }
 
