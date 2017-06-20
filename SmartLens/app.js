@@ -80,6 +80,10 @@ function displayPhotoInFullView (photo){
 	document.querySelector('#fullViewPhoto').style.display = 'block';
 }
 
+function backToGridView (){
+	document.querySelector('#fullViewPhoto').style.display = 'none';
+}
+
 
 function bindClickingOnAPhoto (photo){
 	photo.onclick = function (){
