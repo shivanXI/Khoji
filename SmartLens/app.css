@@ -50,7 +50,7 @@ body {
     cursor: pointer;
 }
 
-.photo img, #fullViewPhoto img {
+.photo img, #fullViewPhoto img, #fullViewPhoto canvas {
     max-width: 100%;
     max-height: 100%;
 }
