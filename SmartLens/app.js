@@ -61,6 +61,15 @@ function findImageFiles (files, folderPath, fileHandlecb) {
 	});
 }
 
+function addImageToPhotosArea (file){
+	var photosArea = document.getElementById('photoes');
+		var template = document.querySelector('#photo-template');
+		template.content.querySelector('img').src = file.path;
+		template.content.querySelector('img').setAttribute('data-name', file.name);
+	var clone = window.document.importNode(template.content, true);
+		photosArea.appendChild(clone);	
+}
+
 window.onload = function (){
 	bindSelectFolderClick(function (folderPath){
 		hideSelectFolderButton();
