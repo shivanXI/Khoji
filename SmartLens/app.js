@@ -82,7 +82,9 @@ function displayPhotoInFullView (photo){
 
 
 function bindClickingOnAPhoto (photo){
-	console.log(photo);
+	photo.onclick = function (){
+		displayPhotoInFullView(photo);
+	};
 }
 
 
