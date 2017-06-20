@@ -78,7 +78,8 @@ window.onload = function (){
 			//console.log(files);
 			if (!err) {
 				findImageFiles(files, folderPath, function (imageFiles){
-					console.log(imageFiles);
+					//console.log(imageFiles);
+					imageFiles.forEach(addImageToPhotosArea);
 				});
 			}
 		});
