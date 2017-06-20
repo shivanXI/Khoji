@@ -79,7 +79,12 @@ window.onload = function (){
 			if (!err) {
 				findImageFiles(files, folderPath, function (imageFiles){
 					//console.log(imageFiles);
-					imageFiles.forEach(addImageToPhotosArea);
+					imageFiles.forEach(function (file, index){
+						addImageToPhotosArea(file);
+						if(index === imageFiles.length-1){
+							bindClickingOnAllPhotoes();
+						}
+					});
 				});
 			}
 		});
