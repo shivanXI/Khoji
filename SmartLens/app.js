@@ -63,6 +63,7 @@ function findImageFiles (files, folderPath, fileHandlecb) {
 	});
 }
 
+
 function addImageToPhotosArea (file){
 	var photosArea = document.getElementById('photoes');
 		var template = document.querySelector('#photo-template');
@@ -131,6 +132,28 @@ function applyFilter (filterName){
 }
 
 
+
+function saveToDisk (){
+	var photoSaver = document.querySelector('#photoSaver');
+	var canvas = document.querySelector('canvas');
+	photoSaver.setAttribute('nwsaveas','Copy of' + canvas.attributes['data-name'].value);
+	photoData = canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+	photoSaver.click();
+}
+
+
+function bindSavingToDisk (){
+	var photoSaver  = document.querySelector('#photoSaver');
+	photoSaver.addEventListener('change', function () {
+		var filePath = this.value;
+		fs.writefile(filepath, photoData, 'base64', function (err){
+			if (err) { alert('Please try again ! Error generated while saving memory:',err.message);}
+			photoData = null;	
+		});
+	});
+}
+
+
 function backToGridView (){
 	var canvas = document.querySelector('canvas');
 	var image = document.createElement('img');
@@ -170,6 +193,7 @@ window.onload = function (){
 						addImageToPhotosArea(file);
 						if(index === imageFiles.length-1){
 							bindClickingOnAllPhotoes();
+							bindSavingToDisk();
 						}
 					});
 				});
