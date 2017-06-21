@@ -65,11 +65,13 @@ function findImageFiles (files, folderPath, fileHandlecb) {
 
 
 function addImageToPhotosArea (file){
-	var photosArea = document.getElementById('photoes');
+		var photosArea = document.getElementById('photoes');
 		var template = document.querySelector('#photo-template');
-		template.content.querySelector('img').src = file.path;
+		template.content.querySelector('img').src = 'images/blank.png';
+		template.content.querySelector('img').setAttribute('data-echo', file.path);
 		template.content.querySelector('img').setAttribute('data-name', file.name);
-	var clone = window.document.importNode(template.content, true);
+	
+		var clone = window.document.importNode(template.content, true);
 		photosArea.appendChild(clone);	
 }
 
@@ -183,6 +185,13 @@ function bindClickingOnAllPhotos (){
 }
 
 window.onload = function (){
+
+	echo.init({    //Initialisation for lazy loading of memories
+		offset: 0,
+		throttle: 0,
+		unload: false
+	});
+
 	bindSelectFolderClick(function (folderPath){
 		hideSelectFolderButton();
 		findAllFiles(folderPath, function (err, files){
@@ -194,6 +203,7 @@ window.onload = function (){
 					imageFiles.forEach(function (file, index){
 						addImageToPhotosArea(file);
 						if(index === imageFiles.length-1){
+							echo.render(); //rendering function for triggering of lazy-loading
 							bindClickingOnAllPhotoes();
 							bindSavingToDisk();
 						}
