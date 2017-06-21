@@ -3,6 +3,8 @@ var fs = require('fs');
 var mime = require('mime');
 var path = require('path');
 
+var photoData = null;
+
 'use strict';
 
 function openFolderDialog (fileHandlecb){
