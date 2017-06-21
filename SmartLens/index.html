@@ -13,7 +13,9 @@
     		</div>
     	</template>
 
-    	<input type="file" nwdirectory id="folderSelector"/>
+    	<input type="file" nwsaveas id="photoSaver"/><!--for saving the changes performed in memories-->
+
+    	<input type="file" nwdirectory id="folderSelector"/> <!--for opening the folder path-->
         
         <div id="select_folder">
     		<span>Select your memories and stories</span>
@@ -43,7 +45,9 @@
     				<img src="images/port.png" alt="port" />
 				</div>
     			
+    			
     			<div id="back" onclick="backToGridView();">Back</div>
+    			<div id="save" class="button" onclick="saveToDisk();">Save as</div>
     		</div>
     	</div>
     
