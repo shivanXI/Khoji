@@ -117,14 +117,17 @@ var filters = {
 };
 
 
-function applyFilter (){
+function applyFilter (filterName){
 	Caman('#image', function (){
-		this.brightness(10);
+		/*this.brightness(10);
 		this.sepia(20);
 		this.saturation(30);
-		this.render();
+		this.render();*/
+		this.reset();
+		filters[filterName](this);
 	});
 }
+
 
 function backToGridView (){
 	var canvas = document.querySelector('canvas');
