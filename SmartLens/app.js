@@ -186,6 +186,11 @@ function bindClickingOnAllPhotos (){
 }
 
 
+function clearArea () {
+	document.getElementById('photoes').innerHTML = '';
+}
+
+
 function loadAnotherFolder (){
 	openFolderDialog(function (folderPath) {
 		findAllFiles(folderPath, function(err, files){
