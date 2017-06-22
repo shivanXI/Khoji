@@ -7,5 +7,6 @@
   }
   "window": {
   	"toolbar":false
+  	"icon":"smartlens.png"
   }
 }

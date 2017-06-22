@@ -26,8 +26,16 @@ app.use(methodOverride());
 // Routes
 // ------------------------------------------------------
 require('./app/routes.js')(app);
+	
+	// ROUTES AND ALL NECESSITIES FOR API
+	var router = express.Router();
+	router.get('/', function(req, res) {
+		res.json({	message: 'Welcome to Adda API'	});
+	});
+	app.use('/api',router);
 
-// Listen
+
+// Listen(Start the server)
 // -------------------------------------------------------
 app.listen(port);
 console.log('App listening on port ' + port);
