@@ -28,11 +28,37 @@ app.use(methodOverride());
 require('./app/routes.js')(app);
 	
 	// ROUTES AND ALL NECESSITIES FOR API
-	var router = express.Router();
-	router.get('/', function(req, res) {
-		res.json({	message: 'Welcome to Adda API'	});
-	});
-	app.use('/api',router);
+	
+		var router = express.Router();
+
+		//Adding middleware to handle each request
+		router.use(function(req, res, next) {
+			console.log('Something is happening.');
+			next(); //explore next route don't stop
+		});
+
+		//test route to test everything is working fine
+		router.get('/', function(req, res) {
+			res.json({	message: 'Welcome to Adda API'	});
+		});
+
+		app.use('/api',router);
+		var model = require('./app/model.js')
+
+		router.route('/users')
+			.post(function(req, res) {
+				var user = new model();
+				user.username = req.body.username;
+				user.age = req.body.age;
+				usre.save(function(err){
+					if (err)
+						res.send(err);
+					res.json({ message: 'Testing User Created!' });
+				});
+			});
+	
+
+	// ROUTES AND ALL NECESSITIES FOR API
 
 
 // Listen(Start the server)
