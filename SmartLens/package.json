@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.html",
   "dependencies": {
+    "colors": "^1.1.2",
     "mime": "^1.3.6"
-  }
+  },
   "window": {
-  	"toolbar":false
-  	"icon":"smartlens.png"
+    "toolbar": false,
+    "icon": "smartlens.png"
   }
 }
