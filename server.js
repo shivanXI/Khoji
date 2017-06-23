@@ -56,6 +56,14 @@ require('./app/routes.js')(app);
 					res.json({ message: 'Testing User Created!' });
 				});
 			});
+			.get(function(req, res) {
+				model.find(function(err, user) {
+					if(err)
+						res.send(err);
+					
+					res.json(user);
+				});
+			});
 	
 
 	// ROUTES AND ALL NECESSITIES FOR API
