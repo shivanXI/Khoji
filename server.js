@@ -50,7 +50,7 @@ require('./app/routes.js')(app);
 				var user = new model();
 				user.username = req.body.username;
 				user.age = req.body.age;
-				usre.save(function(err){
+				user.save(function(err){
 					if (err)
 						res.send(err);
 					res.json({ message: 'Testing User Created!' });
@@ -67,10 +67,23 @@ require('./app/routes.js')(app);
 		
 		router.route('/users/:user_id')
 			.get(function(req, res) {
-				Bear.findById(req.params.user_id, function(err, user) {
+				model.findById(req.params.user_id, function(err, user) {
 					if (err)
 						res.send(err);
 					res.json(user);
+				});
+			});
+			.put(function(req, res) {
+				model.findById(req.params.bear_id, function(err, bear) {
+					if(err)
+						res.send(err);
+					user.username = req.body.username;
+					user.age = req.body.age;
+					user.save(function(err) {
+						if(err)
+							res.send(err);
+						res.json({ message: 'Testing User Updated!' });
+					});
 				});
 			});
 
