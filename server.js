@@ -42,9 +42,9 @@ require('./app/routes.js')(app);
 			res.json({	message: 'Welcome to Adda API'	});
 		});
 
-		app.use('/api',router);
-		var model = require('./app/model.js')
-
+		
+		//Actual request routes
+		//1
 		router.route('/users')
 			.post(function(req, res) {
 				var user = new model();
@@ -64,7 +64,8 @@ require('./app/routes.js')(app);
 					res.json(user);
 				});
 			});
-		
+			
+		//2
 		router.route('/users/:user_id')
 			.get(function(req, res) {
 				model.findById(req.params.user_id, function(err, user) {
@@ -86,6 +87,20 @@ require('./app/routes.js')(app);
 					});
 				});
 			});
+			.delete(function(req, res) {
+				model.remove({
+					_id: req.params.user_id
+				}, function(err, user){
+					if(err)
+						res.send(err);
+
+					res.json({ message: 'Testing user deleted successfully' });
+				});
+			});
+
+			//all our routes will be prefixed with /api
+			app.use('/api',router);
+			var model = require('./app/model.js')
 
 	// ROUTES AND ALL NECESSITIES FOR API
 
