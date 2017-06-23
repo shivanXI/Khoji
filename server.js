@@ -60,11 +60,19 @@ require('./app/routes.js')(app);
 				model.find(function(err, user) {
 					if(err)
 						res.send(err);
-					
+
 					res.json(user);
 				});
 			});
-	
+		
+		router.route('/users/:user_id')
+			.get(function(req, res) {
+				Bear.findById(req.params.user_id, function(err, user) {
+					if (err)
+						res.send(err);
+					res.json(user);
+				});
+			});
 
 	// ROUTES AND ALL NECESSITIES FOR API
 
