@@ -16,7 +16,7 @@ import csv
 
 #chrome_driver = '' #chrome_driver for chrome users
 
-def main_program():
+def main_db_crawl_program():
 	global country, city, name_of_city, link, value_of_city, driver, chrome_driver
 	country = city = name_of_city = link = ''
 	city_val = 0
@@ -39,11 +39,20 @@ def main_program():
 	country_list_detail = country_list.readlines()
 	country_list.close() 
 
+	flag_1 = 0
+
+	for country in country_list_detail:
+		country = country.strip()
+		if flag_1 == 1:
+			begin_place_detail[0] = country
+		if country != begin_place_detail[0]:
+			continue
+		else:
+			flag_1 = 1
 
 
 
 
 
 
-
-main_program()
+main_db_crawl_program()
