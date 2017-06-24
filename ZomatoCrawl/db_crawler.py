@@ -68,7 +68,7 @@ def main_db_crawl_program():
 			else:
 				flag_2 = 1
 
-			print "***************Getting Info of ",city," in ",country," ***************"
+			print "*************** Getting Info of ",city," in ",country," ***************"
 			try:
 				city_flag = 2
 				driver.get(city)
@@ -93,9 +93,36 @@ def main_db_crawl_program():
 							print "\n\nReconnected Again ........\n\n"
 						except:
 							print "No Network Found.......Trying to Reconnect...."
-			print "*****************City in db is",city,"*************************"
+			print "***************** City in db is ",city," *************************"
+			try:
+				city_name = str(driver.find_element_by_xpath("//span[@class='location_input_sp']").text).strip()
+			except:
+				city_name = "NA"
 
-
-
+			print "\n\nFetching Restaurants for",city_name,"......................\n\n"
+			city_flag = 1
+			try:
+				driver.find_element_by_id("search_button").click()
+				print "cnrl"
+				element  =WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID,"search_button")))
+				city_flag = 2
+			except SystemExit:
+				sys_exit()
+			except:
+				while city_flag == 1:
+					try:
+						driver.get(city)
+					except:
+						print "\n____________Memory is wasting; Restarting the driver________________\n"
+						driver.quit()
+						time.sleep(1) 
+						print "\n______________Starting Again_________________\n"
+						driver = webdriver.Firefox()
+					try:
+						element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, "search_button")))
+						city_flag = 0
+					except:
+						print "Search for restaurants by clicking search_button in ",city_name,".........\n"
+						
 
 main_db_crawl_program()
