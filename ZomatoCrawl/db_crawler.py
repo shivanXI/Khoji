@@ -50,7 +50,50 @@ def main_db_crawl_program():
 		else:
 			flag_1 = 1
 
+		cities = open(r"\\"+country+".txt","r") #fetching cities from countries
+		cities_detail = cities.readlines()
+		cities.close()
 
+		if not os.path.exists(r"\\"+country):
+			os.makedirs(r"\\"+country)
+
+		#print "cities crawling from country..........\n\n"
+		flag_2 = 0
+		for city in cities_detail:
+			city = city.strip()
+			if flag_2 == 1:
+				begin_place_detail[1] = city
+			if city != begin_place_detail[1]:
+				continue
+			else:
+				flag_2 = 1
+
+			print "***************Getting Info of ",city," in ",country," ***************"
+			try:
+				city_flag = 2
+				driver.get(city)
+				city_flag = 1
+				element  = WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.ID, "location_pretext")))
+			except SystemExit:
+				sys_exit()	
+			except:
+				if city_flag == 2:
+					print "\n____________Memory is wasting; Restarting the driver________________\n"
+					driver.quit()
+					time.sleep(1) 
+					print "\n______________Starting Again_________________\n"
+					driver = webdriver.Firefox()
+					driver.get(city)
+				elif city_flag == 1:
+					while city_flag == 1:
+						try:
+							driver.get(city)
+							element  = WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.ID, "location_pretext")))
+							city_flag = 0
+							print "\n\nReconnected Again ........\n\n"
+						except:
+							print "No Network Found.......Trying to Reconnect...."
+			print "*****************City in db is",city,"*************************"
 
 
 
