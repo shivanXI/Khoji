@@ -143,8 +143,47 @@ def main_db_crawl_program():
 				except:
 					print "Page/Pages not determined some changes are done by the Admin of the page"
 					page_found = "0"	
-				page_found_test = int(page_found[-1])
-				print page_found_test		
+				page_found_quantity = int(page_found[-1])
+				#print page_found_quanity	
+
+				url = str(driver.current_url)+'?page='
+				
+				for i in xrange(1, page_found_quantity+1):
+					
+					city_flag =1
+					
+					try:
+						city_flag = 2
+						driver.get(url+str(i))
+						city_flag = 1
+						element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID,"location_pretext")))
+					except SystemExit:
+						sys_exit()
+					except:
+						if city_flag == 2:
+							print "\n____________Memory is wasting; Restarting the driver________________\n"
+							driver.quit()
+							time.sleep(1) 
+							print "\n______________Starting Again_________________\n"
+							driver = webdriver.Firefox()
+							driver.get(url+str(i))
+						elif c == 1:
+							while c == 1:
+								try:
+									driver.get(url+str(i))
+									element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID,"location_pretext")))
+									city_flag = 0
+									print "\n\nReconnected Again ........\n\n"
+								except:
+									print "No Network Found.......Trying to Reconnect...."
+
+
+					try:
+						res_element = driver.find_element_by_class_name("result-title")
+					except:
+						print "Restaurant not able to found"
+
+					
 
 
 main_db_crawl_program()
