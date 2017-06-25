@@ -207,6 +207,7 @@ def main_db_crawl_program():
 						print "Restaurant address not found" 
 
 					
+					
 					print "Crawling next page..........",i," of ",city
 					for j in xrange(len(res_elem)):
 						print res_elem[j].text
@@ -214,6 +215,17 @@ def main_db_crawl_program():
 						print res_addr[j].text
 					print '\n\n'
 				city_add.close()
+
+
+			city_val = 1
+			print "\n Restaurant links fetched for ",city_name,".......closing the file \n\n"
+			print "Using Links collected, crawling of restaurants of ",city_name," is starting......................\n\n"
+			cafe_in_city = open(r""+country+"\\"city_name+".txt","r")
+			cafe_in_city_details = cafe_in_city.readlines()
+			cafe_in_city.close()
+			for i in xrange(len(cafe_in_city_details)):
+				cafe_in_city_details[i] = cafe_in_city_details[i].strip()
+				single_cafe_link = cafe_in_city_details[i]
 
 
 
