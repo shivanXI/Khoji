@@ -345,7 +345,18 @@ def main_db_crawl_program():
 						cafe_high[0] = 'Yes'
 					elif ("Takeaway" in i) and (('No' not in i) and ('Not' not in i)):
 						cafe_high[1] = 'Yes'
+					elif (("Seating" in i) or ("Dine-In" in i)) and (('No' not in i) and ('Not' not in i)):
+						cafe_high[2] = 'Yes'
+					elif ("Non Veg" in i) and (('No' not in i) and ('Not' not in i)):
+						cafe_high[3] = 'Yes'
+					elif (("Alcohol" in i) or ("Bar" in i)) and (('No' not in i) and ('Not' not in i)):
+						cafe_high[4] = 'Yes'
+					elif ("Air Conditioned" in i) and (('No' not in i) and ('Not' not in i)):
+						cafe_high[5] = 'Yes'
+					elif ("Wifi" in i) and (('No' not in i) and ('Not' not in i)):
+						cafe_high[6] = 'Yes'
 
+				cuisine = ''
 
 
 main_db_crawl_program()
