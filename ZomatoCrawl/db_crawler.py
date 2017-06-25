@@ -128,4 +128,23 @@ def main_db_crawl_program():
 				driver.find_element_by_id("search_button").click()
 			print driver.current_url
 
+			print "Search clicked for ",city_name," ...................\n"
+			print driver.current_url
+			time.sleep(5)
+
+			if not os.path.exists(r""+country+"\\"+city_name+".txt"):
+				begin_place_detail[4] = '0'
+
+			if begin_place_detail[4] == '0':
+				city_val = 0
+				f = open(r,""+country+"\\"+city_name+".txt","w")
+				try:
+					page_found = str(driver.find_element_by_xpath("//div[@class='col-l-3 mtop0 alpha tmargin pagination-number']/div").text).split()
+				except:
+					print "Page/Pages not determined some changes are done by the Admin of the page"
+					page_found = "0"	
+				page_found_test = int(page_found[-1])
+				print page_found_test		
+
+
 main_db_crawl_program()
