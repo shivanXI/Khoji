@@ -122,7 +122,10 @@ def main_db_crawl_program():
 						element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, "search_button")))
 						city_flag = 0
 					except:
-						print "Search for restaurants by clicking search_button in ",city_name,".........\n"
-						
+						print "Search and try for restaurants by clicking search_button in ",city_name,".........\n"
+
+			if city_flag != 2:
+				driver.find_element_by_id("search_button").click()
+			print driver.current_url
 
 main_db_crawl_program()
