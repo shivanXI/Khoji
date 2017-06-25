@@ -258,13 +258,74 @@ def main_db_crawl_program():
 								print "No Network Found.......Trying to Reconnect...."
 
 				
+				#cafe's name and it's details 
 				try:
 					cafe_name = str(friver.find_element_by_xpath("//span[@itemprop='name']").text).strip()
 				except:
 					cafe_name = "NA"
 
+				
+
 				print "Crawling cafe/restaurant's details named ",cafe_name," .........\n"
-				try	
+				try:
+					cafe_ratings  = str(driver.find_element_by_xpath("//div[@itemprop='ratingValue']").text)
+				except:
+					cafe_ratings = "NA"
+				try:
+					cafe_id = str(driver.find_element_by_xpath("//div[@itemprop='ratingValue']").get_attribute("data-res-id"))
+				except:
+					cafe_id = "NA"
+				try:
+					cafe_add = str(driver.find_element_by_xpath("//div[@class='res-main-address-text']").text) 	
+				except:
+					cafe_add = "NA"
+				try:
+					cafe_location = str(driver.find_element_by_class_name("resmap-img").get_attribute("style").split('|')[2])
+					latitude = cafe_location.split(',')[0]
+					longitude = cafe_location.split(',')[1]
+				except:
+					latitude = "NA"
+					longitude = "NA"
+				try:
+					cafe_pop_review = driver.find_element_by_xpath("//span[@class='grey-text']")
+					if len(cafe_pop_review) == 2:
+						cafe_pop_review = str(cafe_pop_review[0].text.strip())
+						cafe_all_review = str(driver.find_element_by_xpath("//span[@class='grey-text']"){1}.text.strip())
+					else:
+						cafe_all_review = str(cafe_pop_review[0].text.strip())
+						cafe_pop_review = "0"				
+				except:
+					cafe_pop_review = "0"
+					cafe_all_review = "0"		
+				try:
+					cafe_votes = str(driver.find_element_by_xpath("//span[@itemprop='ratingCount']")[0].text.strip())
+				except:
+					cafe_votes = "0"
+				try:
+					cafe_features = str(driver.find_element_by_xpath("//*[@id='mainframe']/div[1]/div/div[1]/div[2]/div/span[2]").text).strip()
+					if cafe_features.split()[-1] == "Collections":
+						cafe_features = cafe_features[12:-12]
+					else:
+						cafe_features = cafe_features[12:-11]
+				except:
+					cafe_features = "NA"
+				try:
+					cafe_avg_person_cost = str(driver.find_element_by_xpath("//*[@id='mainframe']/div[1]/div/div[1]/div[3]/div[8]/div[2]/span[2]").text).strip()
+				except:
+					cafe_avg_person_cost = "NA"
+				try:
+					cafe_estb_types = str(driver.find_element_by_xpath("//*[@id='mainframe']/div[1]/div/div[1]/div[3]/div[2]/div/div/a").text).strip()
+				except:
+					cafe_estb_types = "NA"
+				try:
+					cafe_known = str(driver.find_element_by_xpath("//*[@id='mainframe']/div[1]/div/div[1]/div[3]/div[3]/div/div[2]").text).strip()	
+				except:
+					cafe_known = "NA"
+
+
+
+
+
 
 
 main_db_crawl_program()
