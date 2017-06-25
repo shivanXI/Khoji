@@ -223,11 +223,48 @@ def main_db_crawl_program():
 			cafe_in_city = open(r""+country+"\\"city_name+".txt","r")
 			cafe_in_city_details = cafe_in_city.readlines()
 			cafe_in_city.close()
+
+			
+			
 			for i in xrange(len(cafe_in_city_details)):
 				cafe_in_city_details[i] = cafe_in_city_details[i].strip()
 				single_cafe_link = cafe_in_city_details[i]
+				cafe_flag = 1
+				
+				
+				try:
+					cafe_flag = 2
+					driver.get(cafe_in_city_details[i])
+					cafe_flag = 1
+					element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID,"location_pretext")))
+				except SystemExit:
+					sys_exit()
+				except:
+					if cafe_flag == 2:
+							print "\n____________Memory is wasting; Restarting the driver________________\n"
+							driver.quit()
+							time.sleep(1) 
+							print "\n______________Starting Again_________________\n"
+							driver = webdriver.Firefox()
+							driver.get(cafe_in_city_details[i])
+					elif cafe_flag == 1:
+						while cafe_flag == 1:
+							try:
+								driver.get(cafe_in_city_details[i])
+								element = WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.ID, "location_pretext")))
+								cafe_flag = 0
+								print "\n\nReconnected Again ........\n\n"
+							except:
+								print "No Network Found.......Trying to Reconnect...."
 
+				
+				try:
+					cafe_name = str(friver.find_element_by_xpath("//span[@itemprop='name']").text).strip()
+				except:
+					cafe_name = "NA"
 
+				print "Crawling cafe/restaurant's details named ",cafe_name," .........\n"
+				try	
 
 
 main_db_crawl_program()
