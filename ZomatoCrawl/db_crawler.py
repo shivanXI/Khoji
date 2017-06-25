@@ -310,9 +310,9 @@ def main_db_crawl_program():
 				except:
 					cafe_features = "NA"
 				try:
-					cafe_avg_person_cost = str(driver.find_element_by_xpath("//*[@id='mainframe']/div[1]/div/div[1]/div[3]/div[8]/div[2]/span[2]").text).strip()
+					cafe_cost = str(driver.find_element_by_xpath("//*[@id='mainframe']/div[1]/div/div[1]/div[3]/div[8]/div[2]/span[2]").text).strip()
 				except:
-					cafe_avg_person_cost = "NA"
+					cafe_cost = "NA"
 				try:
 					cafe_estb_types = str(driver.find_element_by_xpath("//*[@id='mainframe']/div[1]/div/div[1]/div[3]/div[2]/div/div/a").text).strip()
 				except:
@@ -325,10 +325,26 @@ def main_db_crawl_program():
 					cafe_shud_order = str(driver.find_element_by_xpath("//*[@id='mainframe']/div[1]/div/div[1]/div[3]/div[4]/div/div[2]").text).strip()
 				except:
 					cafe_shud_order = "NA"	
+				try:
+					cafe_cuisines = driver.find_element_by_xpath("//a[@itemprop='servesCuisine']")
+				except:
+					cafe_cuisines = "NA"
+				try:
+					cafe_highlights = driver.find_element_by_class_name("res-info-feature-text")
+				except:
+					cafe_highlights = "NA"
+				try:
+					cafe_avg_person_cost_range = driver.find_element_by_xpath("//span[@itemprop='priceRange']")[0].text.partition("for")[0].strip()		
+				except:
+					cafe_avg_person_cost_range = "NA"
 
-
-
-
+				cafe_high_array = ['No']*7
+				for i in cafe_highlights:
+					i = str(i.text)
+					if ("Home Delivery" in i) and (('No' not in i) and ('Not' not in i)):
+						cafe_high[0] = 'Yes'
+					elif ("Takeaway" in i) and (('No' not in i) and ('Not' not in i)):
+						cafe_high[1] = 'Yes'
 
 
 
