@@ -321,6 +321,10 @@ def main_db_crawl_program():
 					cafe_known = str(driver.find_element_by_xpath("//*[@id='mainframe']/div[1]/div/div[1]/div[3]/div[3]/div/div[2]").text).strip()	
 				except:
 					cafe_known = "NA"
+				try:
+					cafe_shud_order = str(driver.find_element_by_xpath("//*[@id='mainframe']/div[1]/div/div[1]/div[3]/div[4]/div/div[2]").text).strip()
+				except:
+					cafe_shud_order = "NA"	
 
 
 
