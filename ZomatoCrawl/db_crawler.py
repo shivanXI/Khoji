@@ -23,26 +23,34 @@ def main_db_crawl_program():
 	#driver = webdriver.Chrome(chrome_driver)
 	driver = webdriver.Firefox() 		#for Firefox users
 
+	
 	#print "bpw"
 	begin_place = open("toBeginPlaceWith.txt","r")
 	begin_place_detail = begin_place.readlines()
 	begin_place.close()
 
+	
 	for i in xrange(len(begin_place_detail)):
 		begin_place_detail[i] = begin_place_detail[i].strip()
 	print begin_place_detail
 
+	
+	
 	facilities = ["Home Delivery", "Takeaway", "Seating", "Dine-In", "Non Veg", "Alcohol", "Air Conditioned", "Wifi"]
 
+	
 	#print "cl"
 	country_list = open("country_list.txt","r")
 	country_list_detail = country_list.readlines()
 	country_list.close() 
 
+	
 	flag_1 = 0
 
+	
 	for country in country_list_detail:
 		country = country.strip()
+		
 		if flag_1 == 1:
 			begin_place_detail[0] = country
 		if country != begin_place_detail[0]:
@@ -50,13 +58,16 @@ def main_db_crawl_program():
 		else:
 			flag_1 = 1
 
+		
 		cities = open(r"\\"+country+".txt","r") #fetching cities from countries
 		cities_detail = cities.readlines()
 		cities.close()
 
+		
 		if not os.path.exists(r"\\"+country):
 			os.makedirs(r"\\"+country)
 
+		
 		#print "cities crawling from country..........\n\n"
 		flag_2 = 0
 		for city in cities_detail:
@@ -99,6 +110,8 @@ def main_db_crawl_program():
 			except:
 				city_name = "NA"
 
+			
+
 			print "\n\nFetching Restaurants for",city_name,"......................\n\n"
 			city_flag = 1
 			try:
@@ -124,6 +137,8 @@ def main_db_crawl_program():
 					except:
 						print "Search and try for restaurants by clicking search_button in ",city_name,".........\n"
 
+			
+			
 			if city_flag != 2:
 				driver.find_element_by_id("search_button").click()
 			print driver.current_url
@@ -132,12 +147,14 @@ def main_db_crawl_program():
 			print driver.current_url
 			time.sleep(5)
 
+			
 			if not os.path.exists(r""+country+"\\"+city_name+".txt"):
 				begin_place_detail[4] = '0'
 
+			
 			if begin_place_detail[4] == '0':
 				city_val = 0
-				f = open(r,""+country+"\\"+city_name+".txt","w")
+				city_add = open(r,""+country+"\\"+city_name+".txt","w")
 				try:
 					page_found = str(driver.find_element_by_xpath("//div[@class='col-l-3 mtop0 alpha tmargin pagination-number']/div").text).split()
 				except:
@@ -149,9 +166,7 @@ def main_db_crawl_program():
 				url = str(driver.current_url)+'?page='
 				
 				for i in xrange(1, page_found_quantity+1):
-					
 					city_flag =1
-					
 					try:
 						city_flag = 2
 						driver.get(url+str(i))
@@ -178,12 +193,29 @@ def main_db_crawl_program():
 									print "No Network Found.......Trying to Reconnect...."
 
 
+					
 					try:
 						res_element = driver.find_element_by_class_name("result-title")
 					except:
-						print "Restaurant not able to found"
+						print "Restaurant name not found"
+
 
 					
+					try:
+						res_addr = driver.find_element_by_class_name("search-result-address")
+					except:
+						print "Restaurant address not found" 
+
+					
+					print "Crawling next page..........",i," of ",city
+					for j in xrange(len(res_elem)):
+						print res_elem[j].text
+						print >>city_add, res_elem[j].get_attribute("href")
+						print res_addr[j].text
+					print '\n\n'
+				city_add.close()
+
+
 
 
 main_db_crawl_program()
