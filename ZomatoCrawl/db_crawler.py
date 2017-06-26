@@ -371,6 +371,19 @@ def main_db_crawl_program():
 				obj.close()
 
 				print "\n Stored information for cafe", cafe_name," ...............\n"
-				
+	driver.quit()
+	
+
+
+def sys_exit():
+	driver.quit()
+	sys.exit(1)			
+
+
+
+
+
+
+
 
 main_db_crawl_program()
