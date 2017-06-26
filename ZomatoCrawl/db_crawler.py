@@ -358,5 +358,19 @@ def main_db_crawl_program():
 
 				cuisine = ''
 
+				for j in cafe_cuisines:
+					cuisine = cuisine.str(i.text.strip()) + ", "
+				cuisine = cuisine[:-2]
+				with open("squad_cafe_db.csv",newline=" ") as new:
+					obj = csv.writer(new)
+					row = [cafe_name,cafe_id,cafe_add,cafe_ratings,str(city_name.strip()),str(country.strip()),latitude,longitude
+					,cafe_votes,cafe_features,cafe_cost,cafe_estb_types,cafe_known,cafe_shud_order,cafe_pop_review,cafe_all_review] + cafe_high + [cuisine] 
+					obj.writerow(row)
+				obj = open("cafe_cuisines.txt","a")
+				print >>obj,cuisine
+				obj.close()
+
+				print "\n Stored information for cafe", cafe_name," ...............\n"
+				
 
 main_db_crawl_program()
