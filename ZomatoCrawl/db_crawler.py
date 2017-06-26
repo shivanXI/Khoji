@@ -1,5 +1,7 @@
 # Crawler Only for Zomato Database like restaurants servings, locations in Delhi-NCR
-
+# Author: Shivan Trivedi
+# mozilla firefox and chrome version
+ 
 from selenium import webdriver
 
 from selenium.webdriver.common.by import By 
@@ -401,15 +403,14 @@ def exit_successfully(signum, frame):
 	signal.signal(signal.SIGINT, exit_gracefully)
 
 
+
 def sys_exit():
 	driver.quit()
 	sys.exit(1)			
 
+#store original signal handler
+original_sigint = signal.getsignal(signal.SIGINT)
+signal.signal(signal.SIGINT, exit_successfully)
 
-
-
-
-
-
-
+#Crawler begins the show
 main_db_crawl_program()
