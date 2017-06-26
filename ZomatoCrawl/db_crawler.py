@@ -374,6 +374,32 @@ def main_db_crawl_program():
 	driver.quit()
 	
 
+def exit_successfully(signum, frame):
+	# restoring the signal handler for the instance of control+c pressed at time of input
+	signal.signal(signal.SIGINT, original_sigint)
+	try:
+		if raw_input("\nReally quit? (y/n) ").lower().startswith('y'):
+			text_file = open("toBeginPlaceWith.txt","w")
+			print >>text_file,country
+			print >>text_file,city 
+			print >>text_file,city_name
+			print >>text_file,link
+			print >>text_file, city_val
+			text_file.close()
+			sys.exit(1)
+	except KeyboardInterrupt:
+		print("Quitting forcefully............")
+		text_file = open("toBeginPlaceWith.txt","w")
+		print >>text_file,country
+		print >>text_file,city 
+		print >>text_file,city_name
+		print >>text_file,link
+		print >>text_file, city_val
+		text_file.close()
+		sys.exit(1)
+
+	signal.signal(signal.SIGINT, exit_gracefully)
+
 
 def sys_exit():
 	driver.quit()
