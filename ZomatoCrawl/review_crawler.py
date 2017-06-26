@@ -57,8 +57,8 @@ for j in xrange(12, len(cafe_in_selected_city_details)):
 	except:
 		continue
 
-	t = int(str(load_element.text.split()[-1]))
-	loaded = t
+	items = int(str(load_element.text.split()[-1]))
+	loaded = items
 
 	while load_element.is_displayed:
 		load_element.click()
@@ -69,4 +69,47 @@ for j in xrange(12, len(cafe_in_selected_city_details)):
 			break
 
 		loaded = loaded - 5	
-		
+
+	print "Reviews fetching in progress............\n\n"
+	for i in xrange(items+5):
+		try:
+			user_id = driver.find_element_by_xpath("//*[@id="reviews-container"]/div[1]/div[3]/div[1]/div['+str(i+1)+']/div[2]/div[1]/div[1]/div/div[2]/div[1]/a")
+			with open(user_id+".csv","ab") as k:
+				text_file = csv.writer(k)
+				follow = driver.find_element_by_xpath("//div[@class='zs-following-list']/div["+str(i+1)+"]")
+				ratings = driver.find_element_by_xpath("//div[@class='zs-following-list']/div['+str(i+1)+']/div[3]/div/div/div/div/div")
+
+		print >>text_file,"Review",i
+		print "Reviews given by users ",i, " .........\n\n"
+		print >>f,'\n'
+		print >>f,"Rate = ",((int(rate.get_attribute("class")[-1:])+1)/2.0)
+		print >>f,follow.text.encode('utf-8')
+		print >>f,'\n'
+	text_file.close()
+
+driver.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
