@@ -62,3 +62,5 @@ function getEstimatesForUserLocation(latitude, longitude){
 	});
 }
 
+$("a").click(function(event){
+});
