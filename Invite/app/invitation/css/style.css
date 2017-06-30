@@ -1,0 +1,12 @@
+body {
+	background: url(../img/background.jpg);
+	background-size: cover;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 300;
+}
+
+h1 {
+	margin: 0;
+	text-transform: uppercase;
+	font-weight: 200;
+}
