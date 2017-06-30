@@ -25,6 +25,14 @@ a {
 	text-decoration: none;
 }
 
+.button {
+	background-image: url('../image/UBER_API_Button_2x_Grey_1px_round.png');
+	background-size: cover;
+	width: 280px;
+	height: 44px;
+	margin: 0 auto;
+}
+
 
 .info-container {
 	margin-top: 2%;
