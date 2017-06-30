@@ -63,4 +63,18 @@ function getEstimatesForUserLocation(latitude, longitude){
 }
 
 $("a").click(function(event){
+
+var uberURL = "https://m.uber.com/sign-up?";
+
+uberURL += "client_id=" + uberClientId;
+
+if(typeof userLatitude != typeof undefined) uberURL += "&" + "pickup_latitude=" + userLatitude;
+if(typeof userLongitude != typeof undefined) uberURL += "&" + "pickup_longitude=" + userLongitude;
+
+uberURL += "&" + "dropoff_latitude=" + partyLatitude;
+uberURL += "&"  + "dropoff_longitude=" + partyLongitude;
+uberURL += "&" + "dropoff_nickname=" + "Fombos";
+
+window.location.href = uberURL;
+
 });
