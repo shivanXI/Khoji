@@ -6,6 +6,8 @@ var userLatitude,
 	partyLatitude, 
 	partyLongitude;
 
+var timer;
+
 navigator.geolocation.watchPosition(function(position){
 	//for GPS location
 	console.log(position);
@@ -13,8 +15,16 @@ navigator.geolocation.watchPosition(function(position){
 	userLatitude = position.coords.latitude;
 	userLongitude = position.coords.longitude;
 
+	//Refreshing the coords after 1 min as recommended by uber in DOCS
+	if(typeof timer === typeof undefined){
+		timer = setInterval(function(){
+			getEstimatesForUserLocation(userLatitude, userLongitude);
+		}, 60000);
+	
 	//Querying Uber API
 	getEstimatesForUserLocation(userLatitude, userLongitude);
+	
+	}
 });
 
 //Ajax Request from uber API
