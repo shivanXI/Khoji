@@ -66,3 +66,11 @@ a {
 	width: 280px;
 	height: 280px;
 }
+
+
+#time {
+	text-align: right;
+	margin-top: 2%;
+	padding-top: 12px;
+	padding-right: 14px;
+}
