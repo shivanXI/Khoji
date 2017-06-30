@@ -17,6 +17,7 @@ navigator.geolocation.watchPosition(function(position){
 	getEstimatesForUserLocation(userLatitude, userLongitude);
 });
 
+//Ajax Request from uber API
 function getEstimatesForUserLocation(latitude, longitude){
 	$.ajax({
 		url: "https://api.uber.com/v1/estimates/price",
@@ -30,7 +31,23 @@ function getEstimatesForUserLocation(latitude, longitude){
 			end_longitude: partyLongitude
 		},
 		success: function(result){
-			console.log(result);
+			console.log(JSON.stringify(result));
+
+			//results is array of dictionaries containing different categories of rides of Uber
+			var data = result['prices'];
+			if (typeof data != typeof undefined){
+				//sort the categories by time for shortest pickup time
+				data.sort(function(t0, t1){
+					return t0.duration - t1.duration;
+				});
+
+				//Pick up the shortest one
+				var shortest = data[0];
+				if(typeof shortest != typeof undefined){
+					console.log("Updating time estimates.....");
+					$("#time").html("In "+ Math.ceil(shortest.duration / 60.0) + " Min");
+				}
+			}
 		}
 	});
 }
