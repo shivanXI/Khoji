@@ -1,3 +1,4 @@
 # Khoji
 Copyright Author: Shivan Trivedi
-** Use of codebase and models <b>not allowed</b> without seeking any permission from the author.
+<br />
+<p>** Use of codebase and models in any application <b>is not allowed</b> without seeking permission from the author.</p>
