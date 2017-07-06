@@ -3,7 +3,12 @@ const express =  require('express');
 const request = require('superagent');
 const PORT = process.env.PORT;
 
+//Adding REmote DIrectory Server for caching
+const redis =  require('redis');
+const REDIS_PORT = process.env.REDIS_PORT;
+
 const app = express();
+const client = redis.createClient(REDIS_PORT);
 
 function respond(org, numberOfRepos) {
 	return 'Orgs "${orgs}" has ${numberOfRepos} public repositories.';
