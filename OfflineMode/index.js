@@ -16,4 +16,10 @@ function getNumberOfRepos(req, res, next){
 		var repoNumber = response.body.length;
 		res.send(respond(org, repoNumber));
 	});
-}
+};
+
+app.get('/repos', getNumberOfRepos);
+
+app.listen(PORT, function (){
+	console.log('app listens on port',PORT);
+});
