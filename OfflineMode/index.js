@@ -17,8 +17,15 @@ function respond(org, numberOfRepos) {
 function getNumberOfRepos(req, res, next){
 	const org = req.query.org;
 	request.get('https://api.github.com/orgs/${orgs}/repos', function (err, response){
-		if (err) throw err;
-		var repoNumber = response.body.length;
+		if (err) {
+			throw err;
+		}
+		
+		var repoNumber = 0;
+		if (response && response.body){
+			repoNumber = response.body.length;
+		}
+		client.setex(org, 5, repoNumber);
 		res.send(respond(org, repoNumber));
 	});
 };
