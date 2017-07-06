@@ -8,3 +8,10 @@ const app = express();
 function respond(org, numberOfRepos) {
 	return 'Orgs "${orgs}" has ${numberOfRepos} public repositories.';
 }
+
+function getNumberOfRepos(req, res, next){
+	const org = req.query.org;
+	request.get('https://api.github.com/orgs/${orgs}/repos', function (err, response){
+
+	});
+}
