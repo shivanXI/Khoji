@@ -14,13 +14,25 @@ function respond(org, numberOfRepos) {
 	return 'Orgs "${orgs}" has ${numberOfRepos} public repositories.';
 }
 
+function cache(req, res, next){
+	const org = req.query.org;
+	client.get(org, function (err, data){
+		if (err) throw err;
+		if (data != null){
+			res.send(respond(org, data));
+		} else {
+			next();
+		}
+	});
+}
+
 function getNumberOfRepos(req, res, next){
 	const org = req.query.org;
 	request.get('https://api.github.com/orgs/${orgs}/repos', function (err, response){
 		if (err) {
 			throw err;
 		}
-		
+
 		var repoNumber = 0;
 		if (response && response.body){
 			repoNumber = response.body.length;
@@ -30,7 +42,7 @@ function getNumberOfRepos(req, res, next){
 	});
 };
 
-app.get('/repos', getNumberOfRepos);
+app.get('/repos', cache, getNumberOfRepos);
 
 app.listen(PORT, function (){
 	console.log('app listens on port',PORT);
